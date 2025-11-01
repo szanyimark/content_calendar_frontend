@@ -44,10 +44,27 @@ export class App {
   }
   */
 
+  events = new Map<string, { type: string; title: string }[]>([
+  ['2025-11-01', [
+    { type: 'facebook', title: 'Gólyabál esemény' },
+    { type: 'instagram', title: 'Quizek' }
+  ]],
+  ['2025-11-03', [
+    { type: 'other', title: 'Animaci plakát' }
+  ]],
+  ['2025-11-15', [
+    { type: 'discord', title: 'Tanulmányi ösztöndíjak'}
+  ]],
+  ['2025-11-10', [
+    {type: 'webpage', title: 'Referensi pályázatok'}
+  ]]
+]);
+
+/*
   events = new Map<string, string[]>([
     ['2025-11-01', ['Plan social media posts', 'Team meeting']],
     ['2025-11-03', ['Draft blog article']],
-  ]);
+  ]); */
 
   @ViewChild('dateCellTemplate', { static: true }) dateCellTemplate!: TemplateRef<any>;
 }
