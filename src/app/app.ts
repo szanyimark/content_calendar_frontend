@@ -8,6 +8,12 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
 import { MenuOutline } from '@ant-design/icons-angular/icons';
 import { NzCalendarModule  } from 'ng-zorro-antd/calendar';
 import { NzCardModule } from 'ng-zorro-antd/card';
+import { registerLocaleData } from '@angular/common';
+import hu from '@angular/common/locales/hu';
+
+
+registerLocaleData(hu);
+
 
 @Component({
   selector: 'app-root',
