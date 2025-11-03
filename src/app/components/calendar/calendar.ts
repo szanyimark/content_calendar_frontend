@@ -14,19 +14,48 @@ import { EventService } from '../../services/event';
 export class CalendarComponent {
   constructor(private eventService: EventService) {}
 
-  events = new Map<string, { type: string; title: string }[]>([
+  events = new Map<string, { type: string; title: string, 
+                             description: string, date: Date | null,
+                             place: string | null,
+                             link: string | null, photo: string | null, 
+                             graphics: string[] | null, text: string[] | null,}[]>([
     ['2025-11-01', [
-      { type: 'facebook', title: 'Gólyabál esemény' },
-      { type: 'instagram', title: 'Quizek' }
+      { type: 'facebook', title: 'Gólyabál esemény', 
+        description: 'AAAAA AA AAAAA AAAAAAAAAA AAAAAAAA AAAAAAA AAAAAAAAA AAAAAAAA AAAAAAAAA AAAAAA AAAAA', date: new Date('2025-11-11:23:00'),
+        place: 'Négyzet aula',
+        link: null, photo: null, 
+        graphics: null, text: ['Teszt Elek']
+      },
+      { type: 'instagram', title: 'Quizek', 
+        description: 'ijsd dsjidsd dusdljsd dpojdé djldj sduidsknd sdihsdksd oisdj lsd ildslj', date: null,
+        place: null,
+        link: null, photo: null,
+        graphics: ['Virág', 'Emma', 'Zoltán', 'Andor'], text: null
+      }
     ]],
     ['2025-11-03', [
-      { type: 'other', title: 'Animaci plakát' }
+      { type: 'other', title: 'Animaci plakát', 
+        description: 'yapp', date: null,
+        place: null,
+        link: null, photo: null,
+        graphics: null, text: null
+      }
     ]],
     ['2025-11-15', [
-      { type: 'discord', title: 'Tanulmányi ösztöndíjak' }
+      { type: 'discord', title: 'Tanulmányi ösztöndíjak', 
+        description: 'uashask', date: null,
+        place: null,
+        link: null, photo: null,
+        graphics: null, text: null
+      }
     ]],
     ['2025-11-10', [
-      { type: 'webpage', title: 'Referensi pályázatok' }
+      { type: 'webpage', title: 'Referensi pályázatok', 
+        description: 'skxhnax', date: null,
+        place: null,
+        link: null, photo: null,
+        graphics: null, text: null
+      }
     ]]
   ]);
 

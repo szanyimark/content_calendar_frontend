@@ -7,11 +7,13 @@
                 class="events">
               <div *ngFor="let e of dayEvents"
                   class="event"
-                  [ngClass]="e.type">
+                  [ngClass]="e.type"
+                  (click)="selectEvent(e)">
                 <i *ngIf="e.type === 'facebook'" nz-icon nzType="facebook" nzTheme="fill"></i>
                 <i *ngIf="e.type === 'instagram'" nz-icon nzType="instagram" nzTheme="outline"></i>
                 <i *ngIf="e.type === 'meeting'" nz-icon nzType="calendar" nzTheme="outline"></i>
                 {{ e.title }}
+                
               </div>
             </div>
           </div>

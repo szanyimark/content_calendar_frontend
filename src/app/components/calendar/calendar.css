@@ -50,3 +50,15 @@
   color: white;
 }
 
+.event {
+  cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.event:hover {
+    opacity: 0.7;
+}
+
+

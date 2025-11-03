@@ -12,6 +12,7 @@ import { registerLocaleData } from '@angular/common';
 import hu from '@angular/common/locales/hu';
 
 import { CalendarComponent } from './components/calendar/calendar';
+import { EventDetailsComponent } from './components/details/details';
 
 
 registerLocaleData(hu);
@@ -27,7 +28,8 @@ registerLocaleData(hu);
             NzIconModule,
             NzCalendarModule,
             NzCardModule, 
-            CalendarComponent],
+            CalendarComponent,
+            EventDetailsComponent],
   templateUrl: './app.html',
   styleUrls: ['./app.css']
 })
