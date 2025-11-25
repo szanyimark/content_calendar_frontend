@@ -1,4 +1,8 @@
 <form nz-form [formGroup]="loginForm" class="login-form" (ngSubmit)="submitForm()">
+    <div>
+        <div class="big-title">CONTENT CALENDAR</div>
+        <div class="small-title">- LOGIN -</div>
+    </div>
       <nz-form-item>
         <nz-form-control nzErrorTip="Please input your username!">
           <nz-input-group nzPrefixIcon="user">
@@ -13,6 +17,7 @@
           </nz-input-group>
         </nz-form-control>
       </nz-form-item>
+      <!--
       <div nz-row class="login-form-margin">
         <div nz-col [nzSpan]="12">
           <label nz-checkbox formControlName="remember">
@@ -23,7 +28,13 @@
           <a class="login-form-forgot">Forgot password</a>
         </div>
       </div>
-      <button nz-button class="login-form-button login-form-margin" [nzType]="'primary'">Log in</button>
+      -->
+      <button nz-button class="login-form-button login-form-margin" 
+      [disabled]="!loginForm.valid"
+      [nzType]="'primary'"
+      >Log in</button>
+      <!--
       Or
       <a>register now!</a>
+      -->
     </form>

@@ -56,7 +56,30 @@ export class CalendarComponent {
         link: null, photo: null,
         graphics: null, text: null
       }
-    ]]
+    ]],
+    ['2025-12-02', [
+      { type: 'facebook', title: 'Séta',
+        description: 'hkdhsidisn', date: null,
+        place: null, photo: null,
+        graphics: null, text: null,
+        link: null 
+      }
+    ]],
+    ['2025-10-02', [
+      { type: 'instagram', title: 'Séta',
+        description: 'hkdhsidisn', date: null,
+        place: null, photo: null,
+        graphics: null, text: null,
+        link: null 
+      },
+      { type: 'instagram', title: 'Séta',
+        description: 'hkdhsidisn', date: null,
+        place: null, photo: null,
+        graphics: null, text: null,
+        link: null 
+      }
+    ]],
+      
   ]);
 
   selectEvent(event: any) {
