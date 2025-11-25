@@ -19,4 +19,24 @@ export class EventDetailsComponent {
       this.selectedEvent = event;
     });
   }
+
+  onEdit() {
+    if (this.selectedEvent) {
+      console.log('Edit event:', this.selectedEvent);
+      // TODO: edit functionality
+    }
+  }
+
+  onDelete() {
+    if (this.selectedEvent) {
+      console.log('Delete event:', this.selectedEvent);
+      // TODO: delete functionality
+    }
+  }
+
+  onReady() {
+    if (this.selectedEvent) {
+      console.log('Mark event as ready:', this.selectedEvent);
+    }
+  }
 }
