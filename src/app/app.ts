@@ -14,6 +14,8 @@ import hu from '@angular/common/locales/hu';
 import { CalendarComponent } from './components/calendar/calendar';
 import { EventDetailsComponent } from './components/details/details';
 
+import { AuthService } from './services/auth';
+
 
 registerLocaleData(hu);
 
@@ -56,6 +58,24 @@ export class App {
     ['2025-11-01', ['Plan social media posts', 'Team meeting']],
     ['2025-11-03', ['Draft blog article']],
   ]); */
+
+
+  user: any = null;
+  auth = new AuthService();
+
+  testLogin() {
+    this.auth.login('asd@asd.asd', 'asdasdasd')
+      .then(res => {
+        console.log('Login result:', res);
+        return this.auth.getUser();
+      })
+      .then(user => {
+        this.user = user;
+        console.log('Authenticated user:', user);
+      })
+      .catch(err => console.error('Login failed', err));
+  }
+
 
   @ViewChild('dateCellTemplate', { static: true }) dateCellTemplate!: TemplateRef<any>;
 }
