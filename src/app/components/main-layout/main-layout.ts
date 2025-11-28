@@ -12,6 +12,8 @@ import { ViewChild } from '@angular/core';
 import { CreateEventComponent } from './../create-event/create-event';
 
 import { AuthService } from '../../services/auth';
+import { firstValueFrom } from 'rxjs';
+
 
 
 
@@ -75,18 +77,24 @@ createEventModal!: CreateEventComponent;
     user: any = null;
  
 
-  testLogin() {
-    this.auth.login('asd@asd.asd', 'asdasdasd')
-      .then(res => {
-        console.log('Login result:', res);
-        return this.auth.getUser();
-      })
-      .then(user => {
-        this.user = user;
-        console.log('Authenticated user:', user);
-      })
-      .catch(err => console.error('Login failed', err));
+  async testLogin() {
+  try {
+    // Step 1: Get CSRF cookie
+    await firstValueFrom(this.auth.getCsrfCookie());
+
+    // Step 2: Login
+    const loginResult = await firstValueFrom(this.auth.login('asd@asd.asd', 'asdasdasd'));
+    console.log('Login result:', loginResult);
+
+    // Step 3: Get user
+    const user = await firstValueFrom(this.auth.getUser());
+    console.log('Authenticated user:', user);
+    this.user = user;
+  } catch (err) {
+    console.error('Login failed', err);
   }
+}
+
    
   
 }

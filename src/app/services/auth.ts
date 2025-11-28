@@ -8,44 +8,24 @@ import { throwError } from 'rxjs';
 export class AuthService {
   private apiUrl = 'https://calendar-api-vpl7.onrender.com';
 
-  //constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {}
 
-   // get cookie helper
-  private getCookie(name: string): string | null {
-    const match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
-    return match ? decodeURIComponent(match[2]) : null;
-  }
-
-  getCsrfCookie(): Promise<void> {
-    return fetch(`${this.apiUrl}/sanctum/csrf-cookie`, {
-      method: 'GET',
-      credentials: 'include'
-    }).then(() => {});
+  // Get CSRF cookie
+  getCsrfCookie() {
+    return this.http.get(`${this.apiUrl}/sanctum/csrf-cookie`, { withCredentials: true });
   }
 
   // Login
-  login(email: string, password: string): Promise<any> {
-    return this.getCsrfCookie().then(() => {
-      const token = this.getCookie('XSRF-TOKEN') || '';
-      return fetch(`${this.apiUrl}/api/login`, {
-        method: 'POST',
-        credentials: 'include',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-XSRF-TOKEN': token
-        },
-        body: JSON.stringify({ email, password })
-      }).then(res => res.json());
-    });
+  login(email: string, password: string) {
+    return this.http.post(`${this.apiUrl}/api/login`, { email, password }, { withCredentials: true });
   }
 
   // Fetch authenticated user
-  getUser(): Promise<any> {
-    return fetch(`${this.apiUrl}/api/user`, {
-      method: 'GET',
-      credentials: 'include'
-    }).then(res => res.json());
+  getUser() {
+    return this.http.get(`${this.apiUrl}/api/user`, { withCredentials: true });
   }
+}
+
 
   
 
@@ -72,4 +52,4 @@ export class AuthService {
   */
 
   
-}
+
