@@ -17,7 +17,7 @@ export class AuthService {
 
   // Login
   login(email: string, password: string) {
-    return this.http.post(`${this.apiUrl}/api/login`, { email, password }, { withCredentials: true });
+    return this.http.post(`${this.apiUrl}/login`, { email, password }, { withCredentials: true });
   }
 
   // Fetch authenticated user
