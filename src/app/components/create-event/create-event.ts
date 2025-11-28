@@ -17,7 +17,8 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
     NzDatePickerModule,
     NzSelectModule
   ],
-  templateUrl: './create-event.html'
+  templateUrl: './create-event.html',
+    styleUrls: ['./create-event.css']
 })
 export class CreateEventComponent {
   isVisible = false;
