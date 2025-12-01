@@ -34,12 +34,12 @@ submitForm() {
     password: this.loginForm.value.password
   };
 
-  // Ensure we get the CSRF cookie before attempting to log in
-  this.auth.getCsrfCookie().subscribe({
-    next: () => {
-      this.auth.login(credentials.email, credentials.password).subscribe({
-        next: (res: any) => {
-          console.log('Login success:', res);
+  // Fetch CSRF token (and establish session) then login with header
+  this.auth.getCsrfToken().subscribe({
+    next: (res: { token: string }) => {
+      this.auth.loginWithToken(credentials.email, credentials.password, res.token).subscribe({
+        next: (resp: any) => {
+          console.log('Login success:', resp);
           this.router.navigate(['/main']);
         },
         error: (err: any) => {
@@ -48,7 +48,7 @@ submitForm() {
       });
     },
     error: (err: any) => {
-      console.error('Failed to fetch CSRF cookie:', err);
+      console.error('Failed to fetch CSRF token:', err);
     }
   });
 }
