@@ -26,38 +26,32 @@ export class Login {
     });
   }
 
-  
 
-  
-  
-  submitForm() {
-    const credentials = {
-      email: this.loginForm.value.username,
-      password: this.loginForm.value.password
-    };
+submitForm() {
+  const credentials = {
+    email: this.loginForm.value.username,
+    password: this.loginForm.value.password
+  };
 
-    
-
-    /*
-    this.auth.login(credentials).subscribe({
-      next: (res) => {
-        console.log('Login success:', res);
-        this.router.navigate(['/main']);
-      },
-      error: (err) => {
-        console.error('Login failed:', err);
-      }
-    });
-    */
-
-    
-  }
-
-
-  /*
-  submitForm(): void {
-    console.log('submit');
-    this.router.navigate(['/main']);
-  }
-    */
+  // Ensure we get the CSRF cookie before attempting to log in
+  this.auth.getCsrfCookie().subscribe({
+    next: () => {
+      this.auth.login(credentials).subscribe({
+        next: (res) => {
+          console.log('Login success:', res);
+          this.router.navigate(['/main']);
+        },
+        error: (err) => {
+          console.error('Login failed:', err);
+        }
+      });
+    },
+    error: (err) => {
+      console.error('Failed to fetch CSRF cookie:', err);
+    }
+  });
 }
+
+
+
+
