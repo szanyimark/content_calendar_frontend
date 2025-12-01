@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { FormGroup, ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzInputModule } from 'ng-zorro-antd/input';
@@ -10,10 +11,10 @@ import { AuthService } from '../../services/auth';
 
 @Component({
   selector: 'app-login',
-  imports: [ ReactiveFormsModule, NzButtonModule, NzInputModule, NzFormModule, NzCheckboxModule ],
+  imports: [ CommonModule, ReactiveFormsModule, NzButtonModule, NzInputModule, NzFormModule, NzCheckboxModule ],
   standalone: true,
   templateUrl: './login.html',
-  styleUrl: './login.css',
+  styleUrls: ['./login.css'],
 })
 export class Login {
   loginForm: FormGroup;
@@ -36,21 +37,24 @@ submitForm() {
   // Ensure we get the CSRF cookie before attempting to log in
   this.auth.getCsrfCookie().subscribe({
     next: () => {
-      this.auth.login(credentials).subscribe({
-        next: (res) => {
+      this.auth.login(credentials.email, credentials.password).subscribe({
+        next: (res: any) => {
           console.log('Login success:', res);
           this.router.navigate(['/main']);
         },
-        error: (err) => {
+        error: (err: any) => {
           console.error('Login failed:', err);
         }
       });
     },
-    error: (err) => {
+    error: (err: any) => {
       console.error('Failed to fetch CSRF cookie:', err);
     }
   });
 }
+
+}
+
 
 
 
