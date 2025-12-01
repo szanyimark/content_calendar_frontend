@@ -38,13 +38,15 @@ export const xsrfInterceptor: HttpInterceptorFn = (req: HttpRequest<any>, next: 
   const backend = inject(HttpBackend);
   const bareHttp = new HttpClient(backend);
 
-  const proceedWithToken = (token: string) => next(addXsrfHeader(req, token)).pipe(
+  const proceedWithToken = (token: string) => {
+    const decoded = safelyDecode(token);
+    return next(addXsrfHeader(req, decoded)).pipe(
     catchError((err: any) => {
       if (err instanceof HttpErrorResponse && err.status === 419) {
         // Try once to refresh token then retry
         return bareHttp.get<{ token: string }>(`${API_BASE}/csrf-token`, { withCredentials: true }).pipe(
           switchMap((res) => {
-            csrfTokenCache = res.token;
+            csrfTokenCache = safelyDecode(res.token);
             return next(addXsrfHeader(req, csrfTokenCache));
           }),
           catchError((e) => throwError(() => e))
@@ -52,7 +54,8 @@ export const xsrfInterceptor: HttpInterceptorFn = (req: HttpRequest<any>, next: 
       }
       return throwError(() => err);
     })
-  );
+    );
+  };
 
   if (csrfTokenCache) {
     return proceedWithToken(csrfTokenCache);
@@ -61,9 +64,17 @@ export const xsrfInterceptor: HttpInterceptorFn = (req: HttpRequest<any>, next: 
   // Fetch token first time
   return bareHttp.get<{ token: string }>(`${API_BASE}/csrf-token`, { withCredentials: true }).pipe(
     switchMap((res) => {
-      csrfTokenCache = res.token;
+      csrfTokenCache = safelyDecode(res.token);
       return proceedWithToken(csrfTokenCache);
     }),
     catchError((err) => throwError(() => err))
   );
 };
+
+function safelyDecode(token: string): string {
+  try {
+    return decodeURIComponent(token);
+  } catch {
+    return token;
+  }
+}
