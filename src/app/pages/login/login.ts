@@ -28,31 +28,68 @@ export class Login {
   }
 
 
-submitForm() {
-  const credentials = {
-    email: this.loginForm.value.username,
-    password: this.loginForm.value.password
-  };
+  submitForm() {
+    const credentials = {
+      email: this.loginForm.value.username,
+      password: this.loginForm.value.password
+    };
 
-  // Fetch CSRF token (and establish session) then login with header
-  this.auth.getCsrfToken().subscribe({
-    next: (res: { token: string }) => {
-      this.auth.loginWithToken(credentials.email, credentials.password, res.token).subscribe({
-        next: (resp: any) => {
-          console.log('Login success:', resp);
-          this.router.navigate(['/main']);
-        },
-        error: (err: any) => {
-          console.error('Login failed:', err);
+    // Use Sanctum csrf-cookie endpoint to establish session cookies,
+    // then read the XSRF-TOKEN cookie from the browser, decode it and send it in the header.
+    this.auth.getCsrfCookie().subscribe({
+      next: () => {
+        try {
+          const raw = getCookieValue('XSRF-TOKEN');
+          if (!raw) throw new Error('XSRF-TOKEN cookie not found');
+          let token = raw;
+          try { token = decodeURIComponent(raw); } catch {}
+
+          // Try to parse JSON wrapper like {iv, value, mac}
+          try {
+            if (token.startsWith('{')) {
+              const obj = JSON.parse(token);
+              if (obj && typeof obj.value === 'string') token = obj.value;
+            }
+          } catch {}
+
+          // If looks like base64, try to decode
+          try {
+            const b = token.replace(/\s+/g, '');
+            if (/^[A-Za-z0-9+/=]+$/.test(b)) {
+              try { token = atob(b); } catch {}
+            }
+          } catch {}
+
+          this.auth.loginWithToken(credentials.email, credentials.password, token).subscribe({
+            next: (resp: any) => {
+              console.log('Login success:', resp);
+              this.router.navigate(['/main']);
+            },
+            error: (err: any) => {
+              console.error('Login failed:', err);
+            }
+          });
+        } catch (e) {
+          console.error('Failed to decode XSRF cookie:', e);
         }
-      });
-    },
-    error: (err: any) => {
-      console.error('Failed to fetch CSRF token:', err);
-    }
-  });
+      },
+      error: (err: any) => {
+        console.error('Failed to fetch CSRF cookie:', err);
+      }
+    });
+  }
 }
 
+function getCookieValue(name: string): string | null {
+  if (typeof document === 'undefined') return null;
+  const pairs = document.cookie ? document.cookie.split('; ') : [];
+  for (const p of pairs) {
+    const idx = p.indexOf('=');
+    const key = idx > -1 ? p.substr(0, idx) : p;
+    const val = idx > -1 ? p.substr(idx + 1) : '';
+    if (key === name) return val;
+  }
+  return null;
 }
 
 
