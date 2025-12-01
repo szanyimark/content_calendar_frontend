@@ -40,6 +40,8 @@ export const xsrfInterceptor: HttpInterceptorFn = (req: HttpRequest<any>, next: 
 
   const proceedWithToken = (token: string) => {
     const decoded = safelyDecode(token);
+    console.log('Using XSRF token:', token);
+    console.log('Using XSRF token decoded:', decoded);
     return next(addXsrfHeader(req, decoded)).pipe(
     catchError((err: any) => {
       if (err instanceof HttpErrorResponse && err.status === 419) {
