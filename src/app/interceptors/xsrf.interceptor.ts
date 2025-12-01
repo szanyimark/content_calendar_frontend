@@ -62,11 +62,12 @@ export const xsrfInterceptor: HttpInterceptorFn = (req: HttpRequest<any>, next: 
   if (csrfTokenCache) {
     return proceedWithToken(csrfTokenCache);
   }
-
+  console.log("getting token...")
   // Fetch token first time
   return bareHttp.get<{ token: string }>(`${API_BASE}/csrf-token`, { withCredentials: true }).pipe(
     switchMap((res) => {
       csrfTokenCache = safelyDecode(res.token);
+      console.log("token got: ", csrfTokenCache);
       return proceedWithToken(csrfTokenCache);
     }),
     catchError((err) => throwError(() => err))
