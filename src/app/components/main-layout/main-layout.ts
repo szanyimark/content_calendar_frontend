@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { CalendarComponent } from '../../components/calendar/calendar';
 import { EventDetailsComponent } from '../../components/details/details';
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
@@ -21,7 +21,6 @@ import { firstValueFrom } from 'rxjs';
   selector: 'app-main-layout',
   standalone: true,
   imports: [
-    CommonModule,
     NzLayoutModule,
     NzMenuModule,
     NzDropDownModule,
@@ -29,8 +28,8 @@ import { firstValueFrom } from 'rxjs';
     NzCardModule,
     CalendarComponent,
     EventDetailsComponent,
-    CreateEventComponent 
-  ],
+    CreateEventComponent
+],
   templateUrl: './main-layout.html',
   styleUrls: ['./main-layout.css']
 })

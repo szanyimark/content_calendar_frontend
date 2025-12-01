@@ -1,5 +1,5 @@
 import { Component, TemplateRef, ViewChild } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { RouterOutlet } from '@angular/router';
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
@@ -22,16 +22,7 @@ registerLocaleData(hu);
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, 
-            CommonModule,
-            NzLayoutModule, 
-            NzMenuModule,
-            NzDropDownModule,
-            NzIconModule,
-            NzCalendarModule,
-            NzCardModule, 
-            CalendarComponent,
-            EventDetailsComponent],
+  imports: [RouterOutlet, NzLayoutModule, NzMenuModule, NzDropDownModule, NzIconModule, NzCalendarModule, NzCardModule, CalendarComponent, EventDetailsComponent],
   templateUrl: './app.html',
   styleUrls: ['./app.css']
 })

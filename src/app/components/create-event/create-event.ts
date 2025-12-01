@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzInputModule } from 'ng-zorro-antd/input';
@@ -10,13 +10,12 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
   selector: 'app-create-event',
   standalone: true,
   imports: [
-    CommonModule,
     FormsModule,
     NzModalModule,
     NzInputModule,
     NzDatePickerModule,
     NzSelectModule
-  ],
+],
   templateUrl: './create-event.html',
     styleUrls: ['./create-event.css']
 })

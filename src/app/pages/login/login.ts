@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormGroup, ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzInputModule } from 'ng-zorro-antd/input';
@@ -11,7 +11,7 @@ import { AuthService } from '../../services/auth';
 
 @Component({
   selector: 'app-login',
-  imports: [ CommonModule, ReactiveFormsModule, NzButtonModule, NzInputModule, NzFormModule, NzCheckboxModule ],
+  imports: [ReactiveFormsModule, NzButtonModule, NzInputModule, NzFormModule, NzCheckboxModule],
   standalone: true,
   templateUrl: './login.html',
   styleUrls: ['./login.css'],

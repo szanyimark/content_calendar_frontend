@@ -1,21 +1,30 @@
 <nz-calendar [nzDateCell]="dateCellTemplate"></nz-calendar>
-        <ng-template #dateCellTemplate let-date>
-          <div class="date-cell">
-            
+<ng-template #dateCellTemplate let-date>
+  <div class="date-cell">
 
-            <div *ngIf="events.get(date.toISOString().split('T')[0]) as dayEvents"
-                class="events">
-              <div *ngFor="let e of dayEvents"
-                  class="event"
-                  [class.posted]="e.posted"
-                  [ngClass]="e.type"
-                  (click)="selectEvent(e)">
-                <i *ngIf="e.type === 'facebook'" nz-icon nzType="facebook" nzTheme="fill"></i>
-                <i *ngIf="e.type === 'instagram'" nz-icon nzType="instagram" nzTheme="outline"></i>
-                <i *ngIf="e.type === 'meeting'" nz-icon nzType="calendar" nzTheme="outline"></i>
-                {{ e.title }}
-                
-              </div>
-            </div>
+
+    @if (events.get(date.toISOString().split('T')[0]); as dayEvents) {
+      <div
+        class="events">
+        @for (e of dayEvents; track e) {
+          <div
+            class="event"
+            [class.posted]="e.posted"
+            [ngClass]="e.type"
+            (click)="selectEvent(e)">
+            @if (e.type === 'facebook') {
+              <i nz-icon nzType="facebook" nzTheme="fill"></i>
+            }
+            @if (e.type === 'instagram') {
+              <i nz-icon nzType="instagram" nzTheme="outline"></i>
+            }
+            @if (e.type === 'meeting') {
+              <i nz-icon nzType="calendar" nzTheme="outline"></i>
+            }
+            {{ e.title }}
           </div>
-        </ng-template>
+        }
+      </div>
+    }
+  </div>
+</ng-template>

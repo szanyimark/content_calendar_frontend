@@ -1,63 +1,79 @@
-<div class="event-details" *ngIf="selectedEvent; else noSelection">
-  <h3><b>{{ selectedEvent.title }}</b></h3>
-  <p><b>Platforms:</b> {{ selectedEvent.type }}</p>
-  <div *ngIf="selectedEvent.date">
-    <div>
-        <b>Date:</b> {{ selectedEvent.date | date:'mediumDate' }}
-        <span *ngIf="(selectedEvent.date | date:'HH:mm') !== '00:00'">
-            - {{ selectedEvent.date | date:'HH:mm' }}
-        </span>
-    </div>
-  </div>
-  <div *ngIf="selectedEvent.place">
-    <b>Place:</b> {{selectedEvent.place}}
-  </div>
-  <div><b>Description:</b></div>
-  <div>{{selectedEvent.description}}</div>
-<div *ngIf="selectedEvent.link">
-    <b>Link:</b> <a [href]="selectedEvent.link" target="_blank" rel="noopener noreferrer">{{ selectedEvent.link }}</a>
-</div>
-<div *ngIf="selectedEvent.photo">
-    <div><b>Photo:</b></div>
-    <img [src]="selectedEvent.photo" alt="Event Photo" class="event-photo"/>
-</div>
-
-<div *ngIf="selectedEvent.graphics && selectedEvent.graphics.length > 0">
-    <div><b>Graphics:</b></div>
-    <ul>
-        <li *ngFor="let graphic of selectedEvent.graphics">{{ graphic }}</li>
-    </ul>
-</div>
-<div *ngIf="selectedEvent.text && selectedEvent.text.length > 0">
-    <div><b>Text:</b></div>
-    <ul>
-        <li *ngFor="let textItem of selectedEvent.text">{{ textItem }}</li>
-    </ul>
-</div>
-<div class="signUpBlock">
-    <div>
+@if (selectedEvent) {
+  <div class="event-details">
+    <h3><b>{{ selectedEvent.title }}</b></h3>
+    <p><b>Platforms:</b> {{ selectedEvent.type }}</p>
+    @if (selectedEvent.date) {
+      <div>
+        <div>
+          <b>Date:</b> {{ selectedEvent.date | date:'mediumDate' }}
+          @if ((selectedEvent.date | date:'HH:mm') !== '00:00') {
+            <span>
+              - {{ selectedEvent.date | date:'HH:mm' }}
+            </span>
+          }
+        </div>
+      </div>
+    }
+    @if (selectedEvent.place) {
+      <div>
+        <b>Place:</b> {{selectedEvent.place}}
+      </div>
+    }
+    <div><b>Description:</b></div>
+    <div>{{selectedEvent.description}}</div>
+    @if (selectedEvent.link) {
+      <div>
+        <b>Link:</b> <a [href]="selectedEvent.link" target="_blank" rel="noopener noreferrer">{{ selectedEvent.link }}</a>
+      </div>
+    }
+    @if (selectedEvent.photo) {
+      <div>
+        <div><b>Photo:</b></div>
+        <img [src]="selectedEvent.photo" alt="Event Photo" class="event-photo"/>
+      </div>
+    }
+    @if (selectedEvent.graphics && selectedEvent.graphics.length > 0) {
+      <div>
+        <div><b>Graphics:</b></div>
+        <ul>
+          @for (graphic of selectedEvent.graphics; track graphic) {
+            <li>{{ graphic }}</li>
+          }
+        </ul>
+      </div>
+    }
+    @if (selectedEvent.text && selectedEvent.text.length > 0) {
+      <div>
+        <div><b>Text:</b></div>
+        <ul>
+          @for (textItem of selectedEvent.text; track textItem) {
+            <li>{{ textItem }}</li>
+          }
+        </ul>
+      </div>
+    }
+    <div class="signUpBlock">
+      <div>
         <label>
-            <input type="checkbox" [(ngModel)]="selectedEvent.signUpGraphics" />
-            Sign up for Graphics
+          <input type="checkbox" [(ngModel)]="selectedEvent.signUpGraphics" />
+          Sign up for Graphics
         </label>
-    </div>
-    <div>
+      </div>
+      <div>
         <label>
-            <input type="checkbox" [(ngModel)]="selectedEvent.signUpText" />
-            Sign up for Text
+          <input type="checkbox" [(ngModel)]="selectedEvent.signUpText" />
+          Sign up for Text
         </label>
+      </div>
     </div>
-</div>
-
-<div class="action-buttons">
-    <button class="ready-btn button-75" (click)="onPosted()">{{ selectedEvent?.posted ? 'Undo' : 'Posted' }}</button>
-    <button class="edit-btn button-75" (click)="onEdit()">Edit</button>
-    <button class="delete-btn button-75" (click)="onDelete()">Delete</button>
-</div>
-
-  <!-- Later you can add editing, date, etc. -->
-</div>
-
-<ng-template #noSelection>
+    <div class="action-buttons">
+      <button class="ready-btn button-75" (click)="onPosted()">{{ selectedEvent?.posted ? 'Undo' : 'Posted' }}</button>
+      <button class="edit-btn button-75" (click)="onEdit()">Edit</button>
+      <button class="delete-btn button-75" (click)="onDelete()">Delete</button>
+    </div>
+    <!-- Later you can add editing, date, etc. -->
+  </div>
+} @else {
   <p>Select an event to see details</p>
-</ng-template>
+}
+

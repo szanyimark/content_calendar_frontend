@@ -9,11 +9,11 @@ import { routes } from './app/app.routes';
 import { provideHttpClient } from '@angular/common/http';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { HttpClient, HttpHeaders, HttpClientModule } from '@angular/common/http';
-import { importProvidersFrom } from '@angular/core';
+import { importProvidersFrom, provideZoneChangeDetection } from '@angular/core';
 
 bootstrapApplication(App, {
   providers: [
-    provideRouter(routes),
+    provideZoneChangeDetection(),provideRouter(routes),
     provideAnimations(),
     BrowserAnimationsModule,
     provideHttpClient(),
