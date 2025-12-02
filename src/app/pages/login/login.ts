@@ -11,11 +11,12 @@ import { AuthService } from '../../services/auth';
 
 @Component({
   selector: 'app-login',
-  imports: [ReactiveFormsModule, NzButtonModule, NzInputModule, NzFormModule, NzCheckboxModule],
-  standalone: true,
   templateUrl: './login.html',
   styleUrls: ['./login.css'],
+  standalone: true,
+  imports: [ReactiveFormsModule, NzButtonModule, NzInputModule, NzFormModule, NzCheckboxModule],
 })
+
 export class Login {
   loginForm: FormGroup;
 
