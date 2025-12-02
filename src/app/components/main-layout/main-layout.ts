@@ -119,11 +119,7 @@ createEventModal!: CreateEventComponent;
     try {
       // Attempt to tell backend to invalidate server session (if proxied `/backend/logout` exists)
       try {
-        await fetch('/backend/logout', {
-          method: 'POST',
-          credentials: 'include',
-          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' }
-        });
+        await firstValueFrom(this.auth.logout());
       } catch (e) {
         console.warn('Backend logout request failed or not available:', e);
       }

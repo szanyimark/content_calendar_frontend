@@ -25,6 +25,11 @@ export class AuthService {
   getUser() {
     return this.http.get(`${this.apiUrl}/api/me`, { withCredentials: true });
   }
+
+  // Logout (tell backend to invalidate session and clear cookies)
+  logout() {
+    return this.http.post(`${this.apiUrl}/logout`, {}, { withCredentials: true });
+  }
 }
 
 
