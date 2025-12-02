@@ -29,7 +29,7 @@ import { firstValueFrom } from 'rxjs';
     NzCardModule,
     CalendarComponent,
     EventDetailsComponent,
-    CreateEventComponent 
+    CreateEventComponent
   ],
   templateUrl: './main-layout.html',
   styleUrls: ['./main-layout.css']
@@ -75,18 +75,24 @@ createEventModal!: CreateEventComponent;
     constructor(private auth: AuthService) {}
 
     user: any = null;
- 
+
 
   async testLogin() {
   try {
     // Step 1: Get CSRF cookie
+    console.log('Getting CSRF cookie...');
     await firstValueFrom(this.auth.getCsrfCookie());
+    console.log('CSRF cookie obtained.');
+    const cookie = document.cookie;
+    console.log('Current cookies:', cookie);
 
     // Step 2: Login
+    console.log('Logging in...');
     const loginResult = await firstValueFrom(this.auth.login('asd@asd.asd', 'asdasdasd'));
     console.log('Login result:', loginResult);
 
     // Step 3: Get user
+    console.log('Fetching authenticated user...');
     const user = await firstValueFrom(this.auth.getUser());
     console.log('Authenticated user:', user);
     this.user = user;
@@ -95,6 +101,6 @@ createEventModal!: CreateEventComponent;
   }
 }
 
-   
-  
+
+
 }
