@@ -6,8 +6,8 @@ import { throwError } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  // Use a relative /api path so requests can go through the frontend proxy (same origin)
-  private apiUrl = '/api';
+  // Use a relative `/backend` path so requests go through the frontend proxy (same origin)
+  private apiUrl = '/backend';
 
   constructor(private http: HttpClient) {}
 
@@ -23,7 +23,7 @@ export class AuthService {
 
   // Fetch authenticated user
   getUser() {
-    return this.http.get(`${this.apiUrl}/api/user`, { withCredentials: true });
+    return this.http.get(`${this.apiUrl}/api/me`, { withCredentials: true });
   }
 }
 
